@@ -11,7 +11,7 @@ spec:
       description: contains the cloned git repo
   steps:
     - name: kustomize-build
-      image: image-registry.openshift-image-registry.svc:5000/shuichi-saitoh-tekton/kustomize:docker
+      image: quay.io/ibmgaragecloud/ibmcloud-dev:v2.0.4
       script: |
         #!/bin/sh
         cd ./source/k8s
