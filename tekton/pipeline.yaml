@@ -31,9 +31,21 @@ spec:
         - name: TLSVERIFY
           value: "false"
         - name: IMAGE
-          value: $(params.IMAGE)
+          value: "$(params.IMAGE):$(tasks.git-clone.results.commit)"
       workspaces:
         - name: source
           workspace: defaultws
       runAfter:
         - git-clone
+    - name: kustomize
+      taskRef: 
+         name: kustomize-image
+         kind: Task
+      params:
+        - name: image-with-tag
+          value: $(params.IMAGE):latest
+      runAfter:
+        - build-and-push-container
+      workspaces:
+        - name: source
+          workspace: defaultws

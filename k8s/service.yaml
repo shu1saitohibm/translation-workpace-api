@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: translation-workplace-api
+  name: translation-workplace-api
+spec:
+  selector:
+    app: translation-workplace-api
+  ports:
+  - name: http
+    protocol: TCP
+    port: 3001
+    targetPort: 3001
