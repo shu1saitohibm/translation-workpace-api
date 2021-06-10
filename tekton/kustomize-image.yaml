@@ -14,9 +14,7 @@ spec:
       image: image-registry.openshift-image-registry.svc:5000/shuichi-saitoh-tekton/kustomize:docker
       script: |
         #!/bin/sh
-        pwd
-        ls -R source
-        cd source/k8s
+        cd ./source/k8s
         kustomize edit set image $(params.image-with-tag)
 
         kustomize build > manifests.yaml

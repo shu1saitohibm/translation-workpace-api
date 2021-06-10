@@ -10,6 +10,10 @@ spec:
       type: string
       description: image to be built from the code
       default: quay.io/shu1saitohibm/translation-workplace-api
+    - name: app-namespace
+      description: namespace that deployment will be tested in
+    - name: app-name
+      description: the name of the app
   tasks:
     - name: git-clone
       taskRef:
@@ -37,7 +41,7 @@ spec:
           workspace: defaultws
       runAfter:
         - git-clone
-    - name: run-npm
+    - name: run-test
       taskRef:
         name: run-container
         kind: Task
@@ -66,3 +70,20 @@ spec:
       workspaces:
         - name: source
           workspace: defaultws
+    - name: deploy
+      taskRef:
+         name: test-deploy
+         kind: Task
+      params:
+        - name: app-namespace
+          value: $(params.app-namespace)
+        - name: app-name
+          value: $(params.app-name)
+      workspaces:
+        - name: source
+          workspace: defaultws
+      runAfter:
+        - kustomize
+        - run-test
+
+        

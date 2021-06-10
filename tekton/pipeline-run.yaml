@@ -6,6 +6,11 @@ spec:
   serviceAccountName: build-bot
   pipelineRef:
     name: translation-workplace-api-build
+  params:
+    - name: app-namespace
+      value: shuichi-saitoh-tekton
+    - name: app-name
+      value: translation-workplace-api
   workspaces:
     - name: defaultws
       persistentVolumeClaim:
