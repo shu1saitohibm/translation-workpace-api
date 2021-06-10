@@ -8,10 +8,16 @@ spec:
     name: translation-workplace-api-build
   workspaces:
     - name: defaultws
-      volumeClaimTemplate:
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 1Gi
+      persistentVolumeClaim:
+        claimName: tekton-ws-pvc
+      # volumeClaimTemplate:
+      #   spec:
+      #     accessModes:
+      #       - ReadWriteOnce
+      #     resources:
+      #       requests:
+      #         storage: 1Gi
+  podTemplate:
+    nodeSelector:
+      kubernetes.io/hostname: 10.5.197.35
+      

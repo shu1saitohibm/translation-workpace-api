@@ -37,15 +37,32 @@ spec:
           workspace: defaultws
       runAfter:
         - git-clone
+    - name: run-npm
+      taskRef:
+        name: run-container
+        kind: Task
+      params:
+        - name: IMAGE
+          value: "$(params.IMAGE):$(tasks.git-clone.results.commit)"
+        - name: COMMAND
+          value: "npm"
+        - name: ARGS
+          value: 
+            - "test"
+        - name: WORKDIR
+          value: "/app"
+      runAfter:
+        - build-and-push-container
     - name: kustomize
       taskRef: 
          name: kustomize-image
          kind: Task
       params:
         - name: image-with-tag
-          value: $(params.IMAGE):latest
+          value: "$(params.IMAGE):$(tasks.git-clone.results.commit)"
       runAfter:
         - build-and-push-container
+        #- git-clone
       workspaces:
         - name: source
           workspace: defaultws
