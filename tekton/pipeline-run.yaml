@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: tw-api-build-run-
+spec:
+  serviceAccountName: build-bot
+  pipelineRef:
+    name: translation-workplace-api-build
+  workspaces:
+    - name: defaultws
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi

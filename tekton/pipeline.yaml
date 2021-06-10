@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: translation-workplace-api-build
+spec:
+  workspaces:
+    - name: defaultws
+  params:
+    - name: IMAGE
+      type: string
+      description: image to be built from the code
+      default: quay.io/shu1saitohibm/translation-workplace-api
+  tasks:
+    - name: git-clone
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      params:
+        - name: url
+          value: https://github.com/cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
+        - name: revision
+          value: main
+      workspaces:
+        - name: output
+          workspace: defaultws
+    - name: build-and-push-container
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      params:
+        - name: TLSVERIFY
+          value: "false"
+        - name: IMAGE
+          value: $(params.IMAGE)
+      workspaces:
+        - name: source
+          workspace: defaultws
+      runAfter:
+        - git-clone
