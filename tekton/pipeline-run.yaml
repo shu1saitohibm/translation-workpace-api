@@ -8,7 +8,8 @@ spec:
     name: translation-workplace-api-build
   params:
     - name: git-repo-url
-      value: https://github.com/cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
+      # value: https://github.com/cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
+      value: git@github.com:cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
     - name: app-namespace
       value: shuichi-saitoh-tekton
     - name: app-name
@@ -17,6 +18,9 @@ spec:
     - name: defaultws
       persistentVolumeClaim:
         claimName: tekton-ws-pvc
+    - name: ssh-creds
+      secret:
+        secretName: github-deploykey-secret
       # volumeClaimTemplate:
       #   spec:
       #     accessModes:
@@ -24,9 +28,9 @@ spec:
       #     resources:
       #       requests:
       #         storage: 1Gi
-  # podTemplate:
-  #  nodeSelector:
-  #    kubernetes.io/hostname: 10.5.197.56
+  podTemplate:
+    nodeSelector:
+      kubernetes.io/hostname: 10.5.197.35
   # taskRunSpecs:
   #   - pipelineTaskName: git-clone
   #     taskPodTemplate:

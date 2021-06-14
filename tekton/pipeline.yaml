@@ -5,6 +5,7 @@ metadata:
 spec:
   workspaces:
     - name: defaultws
+    - name: ssh-creds
   params:
     - name: git-repo-name
       type: string
@@ -25,16 +26,22 @@ spec:
   tasks:
     - name: git-clone
       taskRef:
-        name: git-clone
-        kind: ClusterTask
+        name: git-clone-withssh
+        kind: Task
+        # name: git-clone
+        # kind: ClusterTask
       params:
         - name: url
           value: $(params.git-repo-url)
-        - name: revision
-          value: main
+        # - name: revision
+        #   value: main
+        - name: userHome
+          value: "/tmp/home"
       workspaces:
         - name: output
           workspace: defaultws
+        - name: ssh-directory
+          workspace: ssh-creds
     - name: build-and-push-container
       taskRef:
         name: buildah
