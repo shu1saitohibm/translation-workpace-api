@@ -25,6 +25,9 @@ spec:
           - name: defaultws
             persistentVolumeClaim:
               claimName: tekton-ws-pvc
+          - name: ssh-creds
+            secret:
+              secretName: github-deploykey-secret
         podTemplate:
           nodeSelector:
             kubernetes.io/hostname: 10.5.197.35
