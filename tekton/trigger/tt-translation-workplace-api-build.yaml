@@ -26,5 +26,5 @@ spec:
             persistentVolumeClaim:
               claimName: tekton-ws-pvc
         podTemplate:
-        nodeSelector:
-          kubernetes.io/hostname: 10.5.197.35
+          nodeSelector:
+            kubernetes.io/hostname: 10.5.197.35
