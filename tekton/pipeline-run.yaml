@@ -7,6 +7,8 @@ spec:
   pipelineRef:
     name: translation-workplace-api-build
   params:
+    - name: git-repo-url
+      value: https://github.com/cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
     - name: app-namespace
       value: shuichi-saitoh-tekton
     - name: app-name
@@ -22,7 +24,11 @@ spec:
       #     resources:
       #       requests:
       #         storage: 1Gi
-  podTemplate:
-    nodeSelector:
-      kubernetes.io/hostname: 10.5.197.35
-      
+  # podTemplate:
+  #  nodeSelector:
+  #    kubernetes.io/hostname: 10.5.197.56
+  # taskRunSpecs:
+  #   - pipelineTaskName: git-clone
+  #     taskPodTemplate:
+  #       nodeSelector:
+  #         kubernetes.io/hostname: 10.5.197.35

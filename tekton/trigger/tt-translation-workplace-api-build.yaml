@@ -1,0 +1,30 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: translation-workplace-api-build
+spec:
+  params:
+    - name: git-repo-url
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: translation-workplace-api-build-run-
+      spec:
+        serviceAccountName: build-bot
+        pipelineRef:
+          name: translation-workplace-api-build
+        params:
+          - name: git-repo-url
+            value: $(tt.params.git-repo-url)
+          - name: app-namespace
+            value: shuichi-saitoh-tekton
+          - name: app-name
+            value: translation-workplace-api
+        workspaces:
+          - name: defaultws
+            persistentVolumeClaim:
+              claimName: tekton-ws-pvc
+        podTemplate:
+        nodeSelector:
+          kubernetes.io/hostname: 10.5.197.35

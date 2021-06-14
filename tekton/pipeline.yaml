@@ -6,6 +6,14 @@ spec:
   workspaces:
     - name: defaultws
   params:
+    - name: git-repo-name
+      type: string
+      default: tekton-expressapp-shuichi-saitoh
+      description: git repository name.
+    - name: git-repo-url
+      type: string
+      default: https://github.com/cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
+      description: git repository url.
     - name: IMAGE
       type: string
       description: image to be built from the code
@@ -21,7 +29,7 @@ spec:
         kind: ClusterTask
       params:
         - name: url
-          value: https://github.com/cloud-native-garage-method-cohort/tekton-expressapp-shuichi-saitoh.git
+          value: $(params.git-repo-url)
         - name: revision
           value: main
       workspaces:

@@ -1,0 +1,14 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: translation-wp-build
+spec:
+  serviceAccountName: tekton-triggers-sa
+  triggers:
+    - bindings:
+        - ref: translation-workplace-api-build
+      interceptors:
+        - github:
+            eventTypes: ["push"]
+      template: 
+        name: translation-workplace-api-build

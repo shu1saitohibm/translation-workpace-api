@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: el-translation-wp-build
+spec:
+  tls:
+    termination: edge
+  port:
+    targetPort: http-listener
+  to:
+    kind: Service
+    name: el-translation-wp-build
+    weight: 100
