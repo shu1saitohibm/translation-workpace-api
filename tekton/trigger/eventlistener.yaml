@@ -9,6 +9,10 @@ spec:
         - ref: translation-workplace-api-build
       interceptors:
         - github:
-            eventTypes: ["push"]
+            secretRef:
+              secretName: github-webhook-secret
+              secretKey: secretToken
+            eventTypes: 
+              - push
       template: 
         name: translation-workplace-api-build
